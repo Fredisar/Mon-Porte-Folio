@@ -1,3 +1,21 @@
+// Navigation mobile
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+
+hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    hamburger.classList.toggle('active');
+});
+
+// Fermer le menu mobile quand on clique sur un lien
+const navLinksItems = document.querySelectorAll('.nav-links a');
+navLinksItems.forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        hamburger.classList.remove('active');
+    });
+});
+
 // Animation des barres de compétences
 function animateSkills() {
     const skillBars = document.querySelectorAll('.skill-progress');
@@ -7,15 +25,6 @@ function animateSkills() {
         bar.style.width = width + '%';
     });
 }
-
-// Navigation mobile
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    hamburger.classList.toggle('active');
-});
 
 // Animation au scroll
 function checkScroll() {
@@ -46,10 +55,20 @@ window.addEventListener('scroll', () => {
 
 // Formulaire de contact
 const contactForm = document.querySelector('.contact-form');
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert('Merci pour votre message ! Je vous répondrai bientôt.');
-    contactForm.reset();
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Merci pour votre message ! Je vous répondrai bientôt.');
+        contactForm.reset();
+    });
+}
+
+// Fermer le menu si on clique en dehors
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav') && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+        hamburger.classList.remove('active');
+    }
 });
 
 // Initialisation
@@ -69,3 +88,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Vérifier le scroll lors du défilement
 window.addEventListener('scroll', checkScroll);
+
+// Dans la fonction du hamburger, remplacez par :
+hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    hamburger.classList.toggle('active');
+    document.body.classList.toggle('menu-open');
+});
+
+// Et dans les autres fermetures de menu, ajoutez :
+document.body.classList.remove('menu-open');
